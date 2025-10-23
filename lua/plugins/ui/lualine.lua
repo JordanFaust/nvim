@@ -40,9 +40,10 @@ local default = {
 ---@field lsp fun(): table
 
 ---@class util.lualine
----@field setup fun(opts: LualineConfig): void
+---@field setup fun(opts: LualineConfig): nil
 ---@field components LualineComponents
 ---@field config LualineConfig
+---@type util.lualine
 local M = { components = {}, config = default }
 
 local colors = require("catppuccin.palettes").get_palette("macchiato")
@@ -169,7 +170,7 @@ M.components.location = function()
   return {
     "location",
     color = { bg = colors.yellow, fg = colors.mantle, gui = "bold" },
-    fmt = function(_str)
+    fmt = function()
       local line = vim.fn.line(".")
       local line_length = string.len(tostring(line))
       local col = vim.fn.virtcol(".")
@@ -236,9 +237,18 @@ M.components.modes = function()
 end
 
 M.components.macro = function()
+  local noice_ok, noice = pcall(require, "noice")
+  if not noice_ok then
+    return {
+      function() return "" end,
+      cond = function() return false end,
+      color = { fg = colors.red, bg = colors.mantle, gui = "italic,bold" },
+    }
+  end
+
   return {
-    require("noice").api.status.mode.get,
-    cond = require("noice").api.status.mode.has,
+    noice.api.status.mode.get,
+    cond = noice.api.status.mode.has,
     color = { fg = colors.red, bg = colors.mantle, gui = "italic,bold" },
     fmt = trunc(80, 12, 80, true),
   }
@@ -342,7 +352,7 @@ M.setup = function(opts)
   if config.float and config.separator == "bubble" then
     config.separator_icon = { left = "", right = "" }
     config.thin_separator_icon = { left = "", right = "" }
-  elseif config.float and type == "triangle" then
+  elseif config.float and config.separator == "triangle" then
     config.separator_icon = { left = "█", right = "█" }
     config.thin_separator_icon = { left = " ", right = " " }
   end
