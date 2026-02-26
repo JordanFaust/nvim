@@ -65,12 +65,13 @@ return {
         content_layout = "center",
         tabs_layout = "equal",
         show_separator_on_edge = true,
+        separator = { left = "", right = "" },
         sources = {
-          { source = "filesystem", display_name = "󰉓" },
-          { source = "buffers", display_name = "󰈙" },
-          { source = "git_status", display_name = "" },
-          -- { source = "document_symbols", display_name = "o" },
-          { source = "diagnostics", display_name = "󰒡" },
+          { source = "filesystem", display_name = " 󰉓 " },
+          { source = "buffers", display_name = " 󰈙 " },
+          { source = "git_status", display_name = "  " },
+          -- { source = "document_symbols", display_name = " o " },
+          { source = "diagnostics", display_name = " 󰒡 " },
         },
       },
       default_component_configs = {
