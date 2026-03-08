@@ -86,19 +86,22 @@ map(
   vsc("workbench.action.openPreviousRecentlyUsedEditor"),
   { noremap = true, silent = true, desc = "Last Editor" }
 )
-map("n", "<leader>?", vsc("whichkey.searchBindings"), { noremap = true, silent = true, desc = "Search Keybindings" })
-map(
-  "n",
-  "<leader>.",
-  vsc("whichkey.repeatMostRecent"),
-  { noremap = true, silent = true, desc = "Repeat Most Recent Action" }
-)
 map("n", "<leader>!", vsc("workbench.action.terminal.focus"), { noremap = true, silent = true, desc = "Show Terminal" })
 map(
   "n",
   "<leader>/",
-  vsc("workbench.action.findInFiles"),
-  { noremap = true, silent = true, desc = "Search in Project" }
+  vsc("code-telescope.fuzzy.wsText"),
+  { noremap = true, silent = true, desc = "Grep (Project)" }
+)
+
+-- =============================================================================
+-- ## Explorer & Agent (leader + e / leader + a)
+-- =============================================================================
+map(
+  "n",
+  "<leader>e",
+  vsc("workbench.action.toggleSidebarVisibility"),
+  { noremap = true, silent = true, desc = "Toggle Explorer" }
 )
 
 -- =============================================================================
@@ -107,8 +110,8 @@ map(
 map(
   "n",
   "<leader>aa",
-  vsc("composer.startComposerPrompt"),
-  { noremap = true, silent = true, desc = "Toggle Cursor Chat" }
+  vsc("workbench.action.toggleAuxiliaryBar"),
+  { noremap = true, silent = true, desc = "Toggle Agent View" }
 )
 
 -- =============================================================================
@@ -199,7 +202,7 @@ map(
   vsc("workbench.files.action.showActiveFileInExplorer"),
   { noremap = true, silent = true, desc = "Show in [E]xplorer" }
 )
-map("n", "<leader>ff", vsc("workbench.action.quickOpen"), { noremap = true, silent = true, desc = "[F]ind File" })
+map("n", "<leader>ff", vsc("code-telescope.fuzzy.file"), { noremap = true, silent = true, desc = "[F]ind File" })
 map(
   "n",
   "<leader>fF",
@@ -213,6 +216,12 @@ map(
   { noremap = true, silent = true, desc = "[N]ew Untitled File" }
 )
 map("n", "<leader>fp", vsc("workbench.action.openRecent"), { noremap = true, silent = true, desc = "Switch [P]roject" })
+map(
+  "n",
+  "<leader>fr",
+  vsc("code-telescope.fuzzy.recentFiles"),
+  { noremap = true, silent = true, desc = "[R]ecent Files" }
+)
 map("n", "<leader>fs", vsc("workbench.action.files.save"), { noremap = true, silent = true, desc = "[S]ave File" })
 map(
   "n",
@@ -240,6 +249,8 @@ map(
   vsc("workbench.view.extension.github-pull-request"),
   { noremap = true, silent = true, desc = "Pull [R]equest" }
 )
+map("n", "<leader>gb", vsc("code-telescope.fuzzy.branch"), { noremap = true, silent = true, desc = "Git [B]ranches" })
+map("n", "<leader>gL", vsc("code-telescope.fuzzy.commit"), { noremap = true, silent = true, desc = "Git [L]og" })
 map("n", "<leader>gs", vsc("workbench.view.scm"), { noremap = true, silent = true, desc = "Git [S]tatus" })
 
 -- =============================================================================
@@ -249,24 +260,37 @@ map("n", "<leader>pp", vsc("workbench.action.openRecent"), { noremap = true, sil
 map(
   "n",
   "<leader>pf",
-  vsc("workbench.action.quickOpen"),
+  vsc("code-telescope.fuzzy.file"),
   { noremap = true, silent = true, desc = "[P]roject [F]ind File" }
 )
 
 -- =============================================================================
 -- ## Search/Symbol Actions (leader + s)
 -- =============================================================================
-map("n", "<leader>ss", vsc("workbench.action.gotoSymbol"), { noremap = true, silent = true, desc = "[S]ymbol in File" })
 map(
   "n",
-  "<leader>sS",
-  vsc("workbench.action.showAllSymbols"),
-  { noremap = true, silent = true, desc = "All [S]ymbols in Workspace" }
+  "<leader>sb",
+  vsc("code-telescope.fuzzy.fileText"),
+  { noremap = true, silent = true, desc = "[B]uffer Lines (Current File)" }
 )
-map("n", "<leader>sw", function()
-  vscode.action("editor.action.addSelectionToNextFindMatch")
-  vscode.action("workbench.action.findInFiles")
-end, { noremap = true, silent = true, desc = "Search [W]ord in Project" })
+map(
+  "n",
+  "<leader>sd",
+  vsc("code-telescope.fuzzy.diagnostics"),
+  { noremap = true, silent = true, desc = "[D]iagnostics" }
+)
+map(
+  "n",
+  "<leader>sg",
+  vsc("code-telescope.fuzzy.wsText"),
+  { noremap = true, silent = true, desc = "[G]rep (Project)" }
+)
+map(
+  "n",
+  "<leader>sk",
+  vsc("code-telescope.fuzzy.keybindings"),
+  { noremap = true, silent = true, desc = "[K]eybindings" }
+)
 map(
   "n",
   "<leader>sr",
@@ -279,6 +303,22 @@ map(
   vsc("references-view.find"),
   { noremap = true, silent = true, desc = "Search All [R]eferences in Sidebar" }
 )
+map(
+  "n",
+  "<leader>ss",
+  vsc("code-telescope.fuzzy.documentSymbols"),
+  { noremap = true, silent = true, desc = "[S]ymbols in File" }
+)
+map(
+  "n",
+  "<leader>sS",
+  vsc("code-telescope.fuzzy.wsSymbols"),
+  { noremap = true, silent = true, desc = "All [S]ymbols in Workspace" }
+)
+map("n", "<leader>sw", function()
+  vscode.action("editor.action.addSelectionToNextFindMatch")
+  vscode.action("code-telescope.fuzzy.wsText")
+end, { noremap = true, silent = true, desc = "Search [W]ord in Project" })
 
 -- =============================================================================
 -- ## Test Actions (leader + t)
@@ -329,9 +369,9 @@ map(
 -- =============================================================================
 map(
   "n",
-  "<leader>uc",
-  vsc("workbench.action.selectTheme"),
-  { noremap = true, silent = true, desc = "Select Theme [C]olor" }
+  "<leader>uC",
+  vsc("code-telescope.fuzzy.colorschemes"),
+  { noremap = true, silent = true, desc = "Select [C]olorscheme" }
 )
 map(
   "n",
@@ -350,12 +390,6 @@ map("n", "<leader>ux", vsc("workbench.view.extensions"), { noremap = true, silen
 -- =============================================================================
 -- ## VSCode Specific Actions (leader + v)
 -- =============================================================================
-map(
-  "n",
-  "<leader>ve",
-  vsc("workbench.action.toggleSidebarVisibility"),
-  { noremap = true, silent = true, desc = "Toggle [E]xplorer/Sidebar" }
-)
 map(
   "n",
   "<leader>vt",

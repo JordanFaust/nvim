@@ -11,6 +11,16 @@ return {
       opts.cli.win = opts.cli.win or {}
       opts.cli.win.split = opts.cli.win.split or {}
       opts.cli.win.split.width = 60
+
+      opts.cli.mux = opts.cli.mux or {
+        backend = "tmux",
+        -- enabled = true,
+        -- create = "split",
+        split = {
+          vertical = true,
+          size = 0.35,
+        }
+      }
       return opts
     end,
     keys = {
