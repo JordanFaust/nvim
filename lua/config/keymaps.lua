@@ -111,3 +111,8 @@ end, { desc = "which_key_ignore" })
 map("t", "<C-/>", "<cmd>close<cr>", { desc = "Hide Terminal" })
 map("t", "<c-g>", "<cmd>stopinsert<cr>", { desc = "Close Terminal" })
 map("t", "<c-_>", "<cmd>close<cr>", { desc = "which_key_ignore" })
+--
+-- -- Focus/unfocus current buffer
+-- map({ "n", "i", "t", "x" }, "<c-e>f", function()
+--   Snacks.toggle.zoom():toggle()
+-- end, { desc = "Zoom Window (Focus)" })

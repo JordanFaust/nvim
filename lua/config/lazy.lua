@@ -21,12 +21,16 @@ vim.g.maplocalleader = "\\"
 
 -- Setup lazy.nvim
 require("lazy").setup({
+  concurrency = 5,
   spec = {
     -- Add LazyVim and import its plugins
     { "LazyVim/LazyVim", import = "lazyvim.plugins" },
 
     -- Import extras and custom plugins
     { import = "plugins" },
+  },
+  git = {
+    protocol = "https",
   },
   defaults = {
     lazy = false,

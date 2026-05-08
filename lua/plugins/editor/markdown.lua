@@ -34,6 +34,9 @@ return {
   -- Alternative peek.nvim setup for markdown preview
   {
     "toppair/peek.nvim",
+    enabled = function()
+      return not vim.env.CODER
+    end,
     event = { "VeryLazy" },
     build = "deno task --quiet build:fast",
     opts = {

@@ -1,6 +1,5 @@
 -- Use preserved session utilities from CoreUtil
 local session = require("util.session")
-local telescope_utils = require("util.telescope")
 
 local function history()
   -- Use preserved session save functionality
@@ -98,6 +97,7 @@ return {
       },
     },
     opts = function()
+      local telescope_utils = require("util.telescope")
       return {
         defaults = {
           prompt_title = false,

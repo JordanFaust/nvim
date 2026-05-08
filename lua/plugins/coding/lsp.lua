@@ -110,6 +110,5 @@ return {
 
   -- Ensure yaml-companion and schemastore are available for YAML/JSON support
   { "someone-stole-my-name/yaml-companion.nvim", lazy = true },
-  { "b0o/schemastore.nvim", lazy = true },
+  -- { "b0o/schemastore.nvim", lazy = true },
 }
-

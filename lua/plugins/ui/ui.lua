@@ -60,7 +60,9 @@ return {
             highlight = "Directory",
           },
         },
-        get_element_icon = function() return "" end,
+        get_element_icon = function()
+          return ""
+        end,
       },
     },
   },
@@ -157,9 +159,40 @@ return {
     "folke/snacks.nvim",
     ---@type snacks.Config
     opts = {
+      scroll = { enabled = false },
       statuscolumn = {
         enabled = true,
-        -- left = { "mark", "sign", "git" }
+        -- left = { "mark", "sign", "git" },
+        -- right = { "fold", "git" },
+      },
+      explorer = {
+        enabled = false,
+      },
+    },
+  },
+
+  {
+    "lewis6991/satellite.nvim",
+    event = "VeryLazy",
+    opts = {
+      winblend = 50,
+      handlers = {
+        cursor = { enable = true },
+        search = { enable = true },
+        diagnostic = { enable = true },
+        gitsigns = {
+          enable = true,
+          signs = {
+            add = "┃",
+            change = "┃",
+            delete = "┃",
+          },
+        },
+        marks = {
+          enable = true,
+          show_builtins = false,
+        },
+        quickfix = { enable = true },
       },
     },
   },

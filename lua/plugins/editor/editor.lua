@@ -2,6 +2,7 @@ return {
   -- File Navigation
   {
     "nvim-neo-tree/neo-tree.nvim",
+    enabled = true,
     dependencies = {
       "nvim-tree/nvim-web-devicons",
     },

@@ -12,15 +12,16 @@ return {
       opts.cli.win.split = opts.cli.win.split or {}
       opts.cli.win.split.width = 60
 
-      opts.cli.mux = opts.cli.mux or {
-        backend = "tmux",
-        -- enabled = true,
-        -- create = "split",
-        split = {
-          vertical = true,
-          size = 0.35,
+      opts.cli.mux = opts.cli.mux
+        or {
+          backend = "tmux",
+          -- enabled = true,
+          -- create = "split",
+          split = {
+            vertical = true,
+            size = 0.35,
+          },
         }
-      }
       return opts
     end,
     keys = {
@@ -37,7 +38,7 @@ return {
       {
         "<c-.>",
         function()
-          require("sidekick.cli").toggle()
+          require("sidekick.cli").focus()
         end,
         desc = "Sidekick Toggle",
         mode = { "n", "t", "i", "x" },
