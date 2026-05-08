@@ -2,6 +2,14 @@
 -- Default options that are always set: https://github.com/LazyVim/LazyVim/blob/main/lua/lazyvim/config/options.lua
 -- Add any additional options here
 
+-- Prepend mise shims so project-pinned tool versions take precedence over Mason.
+-- Without this, Mason's bin (earlier in PATH) wins for tools like markdownlint-cli2
+-- even when the project specifies a different version via mise.toml.
+local mise_shims = vim.fn.expand("~/.local/share/mise/shims")
+if vim.fn.isdirectory(mise_shims) == 1 then
+  vim.env.PATH = mise_shims .. ":" .. vim.env.PATH
+end
+
 -- Disable netrw
 vim.g.loaded_netrw = 1
 vim.g.loaded_netrwPlugin = 1

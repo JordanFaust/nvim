@@ -75,6 +75,13 @@ return {
         condition = function(_, ctx)
           return M.has_parser(ctx) and M.has_config(ctx) or true
         end,
+        prepend_args = function(_, ctx)
+          local ft = vim.bo[ctx.buf].filetype
+          if ft == "markdown" or ft == "markdown.mdx" then
+            return { "--prose-wrap", "always", "--print-width", "120" }
+          end
+          return {}
+        end,
       }
     end,
   },
