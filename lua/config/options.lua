@@ -66,7 +66,6 @@ opt.pumblend = 10 -- transparency of the popup menu
 opt.pumheight = 10 -- pop up menu height
 opt.scrolloff = 10 -- minimal number of screen lines to keep above and below the cursor
 opt.showmode = false -- we don't need to see things like -- INSERT -- anymore
-opt.showtabline = 2 -- always show tabs
 opt.sidescrolloff = 10
 opt.signcolumn = "yes" -- always show the sign column
 opt.termguicolors = true -- set term gui colors (most terminals support this)
@@ -75,7 +74,6 @@ opt.guicursor = "n-v-c-sm:block,i-ci-ve:ver25,r-cr-o:hor20"
 opt.background = "dark"
 opt.showcmd = false
 opt.mousemoveevent = true
-opt.syntax = "off"
 
 -- Search options
 opt.hlsearch = true -- highlight all matches on previous search pattern

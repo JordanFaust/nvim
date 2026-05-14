@@ -80,7 +80,7 @@ M.save_session = function()
     -- Don't save while there's any 'nofile' buffer open.
     if
       vim.api.nvim_get_option_value("buftype", { buf = buf }) == "nofile"
-      and vim.api.nvim_get_option_value("buftype", { buf = buf }) == "prompt"
+      or vim.api.nvim_get_option_value("buftype", { buf = buf }) == "prompt"
     then
       return
     end

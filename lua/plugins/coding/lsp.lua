@@ -15,19 +15,6 @@ return {
     end,
   },
 
-  {
-    "neovim/nvim-lspconfig",
-    opts = {
-      servers = {
-        ["*"] = {
-          keys = {
-            { "gd", "<cmd>lua vim.lsp.buf.definition()<CR>", has = "definition" },
-          },
-        },
-      },
-    },
-  },
-
   -- Override LSP configuration with custom settings
   {
     "neovim/nvim-lspconfig",
@@ -99,13 +86,6 @@ return {
         desc = "Format and Save",
       },
     },
-  },
-
-  -- Optional: Add lsp-inlayhints.nvim for enhanced inlay hints if needed
-  {
-    "lvimuser/lsp-inlayhints.nvim",
-    event = { "BufReadPost", "BufNewFile", "BufWritePre" },
-    opts = {},
   },
 
   -- Ensure yaml-companion and schemastore are available for YAML/JSON support

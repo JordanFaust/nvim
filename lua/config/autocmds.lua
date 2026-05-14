@@ -64,27 +64,23 @@ vim.api.nvim_create_autocmd({ "FileType" }, {
   end,
 })
 
--- fix comment
-vim.api.nvim_create_autocmd({ "BufEnter", "BufWinEnter" }, {
+-- Prevent filetype plugins from re-enabling auto-comment continuation
+vim.api.nvim_create_autocmd("FileType", {
   group = augroup("comment_newline"),
-  pattern = { "*" },
+  pattern = "*",
   callback = function()
-    vim.cmd([[set formatoptions-=cro]])
+    vim.opt_local.formatoptions:remove({ "c", "r", "o" })
   end,
 })
 
--- Set project title
-vim.api.nvim_create_autocmd({ "BufEnter" }, {
-  pattern = { "" },
+-- Set project title when directory changes
+vim.api.nvim_create_autocmd("DirChanged", {
+  group = augroup("project_title"),
+  pattern = "*",
   callback = function()
-    local get_project_dir = function()
-      local cwd = vim.fn.getcwd()
-      local project_dir = vim.split(cwd, "/")
-      local project_name = project_dir[#project_dir]
-      return project_name
-    end
-
-    vim.opt.titlestring = get_project_dir()
+    local cwd = vim.fn.getcwd()
+    local parts = vim.split(cwd, "/")
+    vim.opt.titlestring = parts[#parts]
   end,
 })
 
@@ -110,22 +106,6 @@ vim.api.nvim_create_autocmd({ "FileType" }, {
 vim.api.nvim_create_autocmd({ "BufWritePre" }, {
   pattern = { "*" },
   command = [[%s/\s\+$//e]],
-})
-
------------------------------ Markdown -----------------------------
-
-vim.api.nvim_create_autocmd({ "FileType" }, {
-  group = augroup("markdown"),
-  pattern = { "markdown" },
-  callback = function()
-    vim.api.nvim_buf_set_keymap(
-      0,
-      "n",
-      "<leader>mp",
-      "<Plug>MarkdownPreview",
-      { noremap = true, silent = true }
-    )
-  end,
 })
 
 ------------------------------ Lua -------------------------------
@@ -157,14 +137,20 @@ vim.api.nvim_create_autocmd("BufWritePre", {
   group = goaugroup,
   pattern = { "*.go" },
   callback = function(event)
-    local params = vim.lsp.util.make_range_params(nil, vim.lsp.util._get_offset_encoding())
+    local clients = vim.lsp.get_clients({ bufnr = event.buf, name = "gopls" })
+    if #clients == 0 then
+      LazyVim.format({ buf = event.buf })
+      return
+    end
+    local enc = clients[1].offset_encoding
+    local params = vim.lsp.util.make_range_params(0, enc)
     params.context = { only = { "source.organizeImports" } }
 
     local result = vim.lsp.buf_request_sync(0, "textDocument/codeAction", params, 3000)
     for _, res in pairs(result or {}) do
       for _, r in pairs(res.result or {}) do
         if r.edit then
-          vim.lsp.util.apply_workspace_edit(r.edit, vim.lsp.util._get_offset_encoding())
+          vim.lsp.util.apply_workspace_edit(r.edit, enc)
         else
           vim.lsp.buf.execute_command(r.command)
         end
@@ -199,7 +185,7 @@ vim.api.nvim_create_autocmd("User", {
 vim.api.nvim_create_autocmd({ "ExitPre" }, {
   callback = function()
     vim.cmd([[silent! NeoTreeClose]])
-    require("plugins.session-utils").save_session()
+    require("util.session").save_session()
   end,
 })
 
