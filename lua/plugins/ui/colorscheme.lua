@@ -83,6 +83,10 @@ return {
       highlight_overrides = {
         all = function(colors)
           return {
+            Cursor = { bg = colors.red, fg = colors.base },
+            CursorIM = { bg = colors.red, fg = colors.base },
+            lCursor = { bg = colors.red, fg = colors.base },
+            TermCursor = { bg = colors.red, fg = colors.base },
             DashboardRecent = { fg = colors.lavender },
             DashboardProject = { fg = colors.blue },
             DashboardConfiguration = { fg = colors.text },

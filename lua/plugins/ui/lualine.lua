@@ -62,7 +62,7 @@ local colors = require("catppuccin.palettes").get_palette("macchiato")
 ---@return fun(string): string - function that can format the component accordingly
 local function trunc(trunc_width, trunc_len, hide_width, no_ellipsis)
   return function(str)
-    local win_width = vim.fn.winwidth(0)
+    local win_width = vim.o.columns
     if hide_width and win_width < hide_width then
       return ""
     elseif trunc_width and trunc_len and win_width < trunc_width and #str > trunc_len then
@@ -189,7 +189,12 @@ end
 
 M.components.branch = function(separator_icon)
   return {
-    "branch",
+    function()
+      local result = vim.fn.system(
+        "git -C " .. vim.fn.shellescape(vim.fn.getcwd()) .. " branch --show-current 2>/dev/null"
+      )
+      return vim.fn.trim(result)
+    end,
     icon = "",
     color = { bg = colors.surface0, fg = colors.red, gui = "bold" },
     separator = separator_icon or M.config.separator_icon,
