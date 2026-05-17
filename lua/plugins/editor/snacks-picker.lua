@@ -13,6 +13,10 @@ return {
         win = {
           input = {
             keys = {
+              ["<a-h>"] = {
+                "toggle_hidden",
+                mode = { "n", "i" },
+              },
               ["<a-c>"] = {
                 "toggle_cwd",
                 mode = { "n", "i" },
