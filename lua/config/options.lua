@@ -73,7 +73,7 @@ opt.wrap = false -- display lines as one long line
 opt.guicursor = "n-v-c-sm:block,i-ci-ve:ver25,r-cr-o:hor20"
 opt.background = "dark"
 opt.showcmd = false
-opt.mousemoveevent = true
+opt.mousemoveevent = false
 
 -- Search options
 opt.hlsearch = true -- highlight all matches on previous search pattern
@@ -98,7 +98,7 @@ opt.splitright = true -- force all vertical splits to go to the right of current
 
 -- Timing options
 opt.timeoutlen = 250 -- time to wait for a mapped sequence to complete (in milliseconds)
-opt.updatetime = 200 -- faster completion (4000ms default)
+opt.updatetime = 300 -- faster completion (4000ms default)
 
 -- Mouse and selection
 opt.mouse = "a" -- allow the mouse to be used in neovim
@@ -113,7 +113,7 @@ opt.foldlevelstart = 99
 opt.foldlevel = 99
 opt.foldenable = true
 opt.foldcolumn = "1"
-opt.smoothscroll = true
+opt.smoothscroll = false
 -- Note: foldexpr and foldmethod will be set by LazyVim's UFO configuration
 opt.foldmethod = "expr"
 opt.foldtext = ""

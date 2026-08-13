@@ -3,7 +3,6 @@ return {
   { import = "lazyvim.plugins.extras.ai.copilot" },
   { import = "lazyvim.plugins.extras.ai.sidekick" },
   { import = "lazyvim.plugins.extras.coding.blink" },
-  { import = "lazyvim.plugins.extras.coding.luasnip" },
   { import = "lazyvim.plugins.extras.coding.neogen" },
 
   -- Editor Extras

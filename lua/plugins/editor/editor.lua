@@ -60,7 +60,8 @@ return {
       })
     end,
     opts = {
-      close_if_last_window = true, -- Close Neo-tree if it is the last window left in the tab
+      close_if_last_window = true,
+      git_status_async = true,
       source_selector = {
         winbar = true, -- toggle to show selector on winbar
         content_layout = "center",
@@ -113,10 +114,10 @@ return {
         filtered_items = {
           visible = false, -- when true, they will just be displayed differently than normal items
           hide_dotfiles = false,
-          hide_gitignored = false,
+          hide_gitignored = true,
         },
         follow_current_file = {
-          enabled = true,
+          enabled = false,
         },
         -- This will find and focus the file in the active buffer every
         -- time the current file is changed while the tree is open.
@@ -126,7 +127,7 @@ return {
         -- "open_current",  -- netrw disabled, opening a directory opens within the
         -- window like netrw would, regardless of window.position
         -- "disabled",    -- netrw left alone, neo-tree does not handle opening dirs
-        use_libuv_file_watcher = true, -- This will use the OS level file watchers to detect changes
+        use_libuv_file_watcher = false, -- This will use the OS level file watchers to detect changes
         -- instead of relying on nvim autocmd events.
       },
       buffers = {

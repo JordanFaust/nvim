@@ -161,7 +161,7 @@ return {
     opts = {
       scroll = { enabled = false },
       statuscolumn = {
-        enabled = true,
+        enabled = false,
         -- left = { "mark", "sign", "git" },
         -- right = { "fold", "git" },
       },
@@ -174,6 +174,7 @@ return {
   {
     "lewis6991/satellite.nvim",
     event = "VeryLazy",
+    enabled = false,
     opts = {
       winblend = 50,
       handlers = {

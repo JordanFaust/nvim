@@ -29,6 +29,7 @@ return {
 
       -- Preserve lua_ls configuration
       opts.servers = opts.servers or {}
+      opts.servers.yamlls = { enabled = false }
       opts.servers.lua_ls = opts.servers.lua_ls or {}
       opts.servers.lua_ls.mason = false
       opts.servers.lua_ls.settings = {
@@ -89,6 +90,6 @@ return {
   },
 
   -- Ensure yaml-companion and schemastore are available for YAML/JSON support
-  { "someone-stole-my-name/yaml-companion.nvim", lazy = true },
-  -- { "b0o/schemastore.nvim", lazy = true },
+  { "someone-stole-my-name/yaml-companion.nvim", enabled = false, lazy = true },
+  { "b0o/schemastore.nvim", lazy = true, enabled = false },
 }

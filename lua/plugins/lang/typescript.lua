@@ -330,11 +330,4 @@ return {
     },
   },
 
-  -- Use JavaScript snippets in TypeScript
-  {
-    "L3MON4D3/LuaSnip",
-    opts = function()
-      require("luasnip").filetype_extend("typescript", { "javascript" })
-    end,
-  },
 }

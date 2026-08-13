@@ -7,6 +7,8 @@ return {
     "folke/sidekick.nvim",
     opts = function(_, opts)
       opts = opts or {}
+      opts.nes = opts.nes or {}
+      opts.nes.enabled = false
       opts.cli = opts.cli or {}
       opts.cli.win = opts.cli.win or {}
       opts.cli.win.split = opts.cli.win.split or {}
@@ -26,14 +28,6 @@ return {
     end,
     keys = {
       -- Tab for next edit suggestions
-      {
-        "<tab>",
-        function()
-          return LazyVim.cmp.map({ "ai_nes" }, "<tab>")()
-        end,
-        mode = { "n" },
-        expr = true,
-      },
       { "<leader>a", "", desc = "+ai", mode = { "n", "v" } },
       {
         "<c-.>",
@@ -130,7 +124,7 @@ return {
     },
   },
 
-  -- Blink.cmp integration with sidekick
+  -- Blink.cmp integration with sidekick (NES disabled)
   {
     "saghen/blink.cmp",
     optional = true,
@@ -138,16 +132,22 @@ return {
       keymap = {
         ["<Tab>"] = {
           "snippet_forward",
-          function() -- sidekick next edit suggestion
-            return require("sidekick").nes_jump_or_apply()
-          end,
-          function() -- if you are using Neovim's native inline completions
-            return vim.lsp.inline_completion.get()
-          end,
           "fallback",
         },
       },
     },
+  },
+
+  -- Disable copilot
+  {
+    "zbirenbaum/copilot.lua",
+    optional = true,
+    enabled = false,
+  },
+  {
+    "github/copilot.vim",
+    optional = true,
+    enabled = false,
   },
 
   {

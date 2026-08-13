@@ -187,13 +187,55 @@ M.components.git_icon = function(separator_icon)
   }
 end
 
+local branch_name = ""
+local branch_job
+local branch_cwd
+
+local function refresh_branch()
+  local cwd = vim.uv.cwd()
+  if not cwd then
+    return
+  end
+
+  if branch_job then
+    if branch_cwd ~= cwd then
+      branch_name = ""
+    end
+    return
+  end
+
+  branch_cwd = cwd
+  local job = vim.system({ "git", "-C", cwd, "branch", "--show-current" }, { text = true }, function(result)
+    if branch_job ~= job then
+      return
+    end
+
+    branch_job = nil
+    if vim.uv.cwd() ~= cwd then
+      refresh_branch()
+      return
+    end
+
+    branch_name = result.code == 0 and vim.trim(result.stdout or "") or ""
+    vim.schedule(function()
+      if package.loaded["lualine"] then
+        require("lualine").refresh({ place = { "statusline" } })
+      end
+    end)
+  end)
+  branch_job = job
+end
+
+vim.api.nvim_create_autocmd({ "BufEnter", "DirChanged" }, {
+  group = vim.api.nvim_create_augroup("user_lualine_branch", { clear = true }),
+  callback = refresh_branch,
+})
+
 M.components.branch = function(separator_icon)
   return {
     function()
-      local result = vim.fn.system(
-        "git -C " .. vim.fn.shellescape(vim.fn.getcwd()) .. " branch --show-current 2>/dev/null"
-      )
-      return vim.fn.trim(result)
+      refresh_branch()
+      return branch_name
     end,
     icon = "",
     color = { bg = colors.surface0, fg = colors.red, gui = "bold" },
